@@ -71,4 +71,18 @@ public class MenuService {
             System.out.println("db 연동 실패 혹은 검색 결과 없음");
         sqlSession.close();
     }
+
+    public void modifyMenu(Map<String, Object> criteria) {
+        SqlSession sqlSession = Template.GetSqlSession();
+        MenuMapper mapper = sqlSession.getMapper(MenuMapper.class);
+       int result = mapper.updateMenu(criteria);
+       if(result>0){
+           System.out.println("정보 메뉴 수정 완료.");
+           sqlSession.commit();
+       }else{
+           System.out.println("메뉴 정보 변경 실패");
+           sqlSession.rollback();
+       }
+       sqlSession.close();
+    }
 }

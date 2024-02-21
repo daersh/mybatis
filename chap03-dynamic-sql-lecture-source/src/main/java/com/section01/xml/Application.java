@@ -5,6 +5,7 @@ import java.util.*;
 public class Application {
 
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
         do{
             System.out.println("====== 마이바티스 동적 sql ======");
@@ -169,7 +170,7 @@ public class Application {
                     menuService.searchMenuByNameOrCategory(inputSearchCriteriaMap());
                     break;
                 case 3:
-
+                    menuService.modifyMenu(inputChangeInfo());
                     break;
                 case 9:
                     return;
@@ -222,4 +223,21 @@ public class Application {
         return searchCriteria;
     }
 
+
+    private static Map<String,Object> inputChangeInfo() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("변경할 메뉴 코드 입력: ");
+        int menuCode = sc.nextInt();
+        System.out.print("변경할 메뉴 이름 입력:");
+        sc.nextLine();
+        String menuName = sc.nextLine();
+        System.out.print("변경할 판매 여부 결정(Y/M): ");
+        String orderableStatus = sc.nextLine().toUpperCase();
+        Map<String , Object> criteria = new HashMap<>();
+        criteria.put("menuCode",menuCode);
+        criteria.put("menuName",menuName);
+        criteria.put("orderableStatus", orderableStatus);
+
+        return criteria;
+    }
 }

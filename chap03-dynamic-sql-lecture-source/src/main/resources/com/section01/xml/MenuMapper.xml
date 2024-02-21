@@ -3,8 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!--인터페이스 MenuMapper와 연결하기 위함-->
 <mapper namespace="com.section01.xml.MenuMapper">
 
+    <!--DTO와 연결-->
     <resultMap id="menuResultMap" type="com.section01.xml.MenuDTO">
         <id property="menuCode" column="MENU_CODE"/>
         <result property="menuName" column="MENU_NAME"/>
@@ -131,17 +133,49 @@
     <select id="searchMenuByNameOrCategory" resultMap="menuResultMap" parameterType="hashmap">
         SELECT *
           FROM TBL_MENU A
-        <where>
-            <if test="nameValue !=null">
+<!--        <where>-->
+<!--            <if test="nameValue !=null and menuName !=''">-->
+<!--                A.MENU_NAME LIKE CONCAT('%',#{nameValue},'%')-->
+<!--            </if>-->
+<!--            <if test="categoryValue !=null and orderableStatus!=''">-->
+<!--                AND A.CATEGORY_CODE LIKE CONCAT(#{categoryValue})-->
+<!--            </if>-->
+<!--        </where>-->
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="nameValue !=null and menuName !=''">-->
                 A.MENU_NAME LIKE CONCAT('%',#{nameValue},'%')
             </if>
-            <if test="categoryValue !=null">
+            <if test="categoryValue !=null and orderableStatus!=''">
                 AND A.CATEGORY_CODE LIKE CONCAT(#{categoryValue})
             </if>
-        </where>
-
-
+        </trim>
 
     </select>
+
+    <update id="updateMenu" parameterType="hashmap">
+        UPDATE
+               TBL_MENU
+<!--            <set>-->
+<!--            <if test="menuName!=null ">-->
+<!--                MENU_NAME= #{menuName}-->
+<!--            </if>-->
+<!--            <if test="orderableStatus!=null">-->
+<!--               , ORDERABLE_STATUS= #{orderableStatus}-->
+<!--            </if>-->
+<!--        </set>-->
+
+        <trim prefix="SET" prefixOverrides=",">
+            <if test="menuName!=null ">
+                MENU_NAME= #{menuName}
+            </if>
+            <if test="orderableStatus!=null">
+               , ORDERABLE_STATUS= #{orderableStatus}
+            </if>
+        </trim>
+         WHERE MENU_CODE = #{menuCode}
+
+
+    </update>
+
 
 </mapper>
