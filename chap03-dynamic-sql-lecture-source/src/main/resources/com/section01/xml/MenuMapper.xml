@@ -113,10 +113,34 @@
             #{menuCode}
         </foreach>
 
-        <!--설명. 원하는 곳에 있는 메소드으 ㅣ반홚값을 바로 활용할 때-->
+        <!--설명. 원하는 곳에 있는 메소드의 반환값을 바로 활용할 때 <비추>-->
         <!--        <foreach collection="@com.section01.xml.Application@generateRandomMenuCodeList()" item="menuCode" open="(" close=")" separator=", ">-->
         <!--            #{menuCode}-->
         <!--        </foreach>-->
+
+    </select>
+
+    <select id="searchMenuByCodeOrSearchAll" resultMap="menuResultMap" parameterType="com.section01.xml.SearchCriteria">
+        SELECT *
+          FROM TBL_MENU A
+         <if test="condition != null and condition eq 'menuCode'">
+             WHERE A.MENU_CODE = #{value}
+         </if>
+    </select>
+
+    <select id="searchMenuByNameOrCategory" resultMap="menuResultMap" parameterType="hashmap">
+        SELECT *
+          FROM TBL_MENU A
+        <where>
+            <if test="nameValue !=null">
+                A.MENU_NAME LIKE CONCAT('%',#{nameValue},'%')
+            </if>
+            <if test="categoryValue !=null">
+                AND A.CATEGORY_CODE LIKE CONCAT(#{categoryValue})
+            </if>
+        </where>
+
+
 
     </select>
 

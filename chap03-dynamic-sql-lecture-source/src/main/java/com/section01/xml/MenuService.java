@@ -2,6 +2,7 @@ package com.section01.xml;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
+import java.util.Map;
 
 public class MenuService {
 
@@ -38,7 +39,32 @@ public class MenuService {
         SqlSession sqlSession = Template.GetSqlSession();
         MenuMapper mapper = sqlSession.getMapper(MenuMapper.class);
 
-        List<MenuDTO>menus = mapper.searchMenuByRandomMenuCode();
+        List<MenuDTO>menus = mapper.searchMenuByRandomMenuCode(integers);
+        if(menus!=null && menus.size()>0)
+            menus.forEach(System.out::println);
+        else
+            System.out.println("db 연동 실패 혹은 검색 결과 없음");
+        sqlSession.close();
+    }
+
+    public void searchMenuByCodeOrSearchAll(SearchCriteria searchCriteria) {
+        SqlSession sqlSession = Template.GetSqlSession();
+        MenuMapper menuMapper = sqlSession.getMapper(MenuMapper.class);
+
+        List<MenuDTO> menus = menuMapper.searchMenuByCodeOrSearchAll(searchCriteria);
+
+        if(menus!=null && menus.size()>0)
+            menus.forEach(System.out::println);
+        else
+            System.out.println("db 연동 실패 혹은 검색 결과 없음");
+        sqlSession.close();
+    }
+
+    public void searchMenuByNameOrCategory(Map<String, Object> searchCriteria) {
+        SqlSession sqlSession = Template.GetSqlSession();
+        MenuMapper menuMapper = sqlSession.getMapper(MenuMapper.class);
+
+        List<MenuDTO> menus = menuMapper.searchMenuByNameOrCategory(searchCriteria);
         if(menus!=null && menus.size()>0)
             menus.forEach(System.out::println);
         else
