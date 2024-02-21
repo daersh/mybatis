@@ -37,7 +37,6 @@
              , A.ORDERABLE_STATUS
           FROM TBL_MENU A
          WHERE A.ORDERABLE_STATUS = 'Y'
-
         <!--설명. 동적 쿼리 사용-->
         <if test="maxPrice gte 0 and price lte 10000">
             <!--참고. '<' 와 같은 문자가 들어가면 CDATA로 변환시켜야한다!!!!! -->
@@ -76,7 +75,6 @@
             AND B.CATEGORY_NAME = #{value}
         </if>
         ORDER BY 1 DESC
-
     </select>
 
     <select id="searchMenuBySupCategory" parameterType="com.section01.xml.SearchCriteria" resultMap="menuResultMap">
@@ -99,6 +97,27 @@
                 AND A.CATEGORY_CODE IN (11,12)
             </when>
         </choose>
+    </select>
+
+    <select id="searchMenuByRandomMenuCode" resultMap="menuResultMap">
+        SELECT
+               A.MENU_CODE
+             , A.MENU_NAME
+             , A.MENU_PRICE
+             , A.CATEGORY_CODE
+             , A.ORDERABLE_STATUS
+          FROM TBL_MENU A
+         WHERE A.MENU_CODE IN
+        <!--설명. list, map 과 같은 컬렉션으로 넘어온 값을 가지고 반복하는 sql 작성-->
+        <foreach collection="list" item="menuCode" open="(" close=")" separator=", ">
+            #{menuCode}
+        </foreach>
+
+        <!--설명. 원하는 곳에 있는 메소드으 ㅣ반홚값을 바로 활용할 때-->
+        <!--        <foreach collection="@com.section01.xml.Application@generateRandomMenuCodeList()" item="menuCode" open="(" close=")" separator=", ">-->
+        <!--            #{menuCode}-->
+        <!--        </foreach>-->
 
     </select>
+
 </mapper>
