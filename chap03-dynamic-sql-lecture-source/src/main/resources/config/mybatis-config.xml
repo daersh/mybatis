@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--1. properties > 2.environments > 3. mapper -->
+    <properties resource="config/connection-info.properties"/>
+
+    <environments default="dev">
+
+        <environment id="dev">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+
+    </environments>
+
+    <!-- mapper들이 존재할 패키지로 한번에 mapper 등록이 가능하다. -->
+    <mappers>
+        <package name="com.section01.xml"/> <!--xml 디렉에 있는 모든 매퍼들을 받겠다는 뜻-->
+
+    </mappers>
+</configuration>
