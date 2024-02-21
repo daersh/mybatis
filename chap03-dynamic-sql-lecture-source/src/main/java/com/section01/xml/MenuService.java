@@ -12,7 +12,8 @@ public class MenuService {
         SqlSession sqlSession = Template.GetSqlSession();
         MenuMapper mapper = sqlSession.getMapper(MenuMapper.class);
         List<MenuDTO> menus = mapper.selectMenuByPrice(maxPrice);
-
+        System.out.println("service: ");
+        menus.forEach(System.out::println);
 
     }
 }
