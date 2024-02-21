@@ -16,4 +16,12 @@ public class MenuService {
         menus.forEach(System.out::println);
 
     }
+
+    public void searchMenu(SearchCriteria searchCriteria) {
+        SqlSession sqlSession = Template.GetSqlSession();
+        MenuMapper mapper = sqlSession.getMapper(MenuMapper.class);
+        List<MenuDTO> menus = mapper.searchMenu(searchCriteria);
+        System.out.println("service: ");
+        menus.forEach(System.out::println);
+    }
 }

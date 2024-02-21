@@ -51,7 +51,7 @@ public class Application {
                     menuService.findMenuByPrice(inputPrice());
                     break;
                 case 2:
-
+                    menuService.searchMenu(inputSearchCriteria());
                     break;
                 case 9:
                     return;
@@ -59,11 +59,23 @@ public class Application {
         }while (true);
     }
 
+
     private static int inputPrice() {
         Scanner sc = new Scanner(System.in);
         System.out.println("검색할 가격대의 최대 금액을 입력하세요.");
         System.out.print("입력: ");
         return sc.nextInt();
+    }
+
+    private static SearchCriteria inputSearchCriteria() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("검색 기준 입력해주세요(name or category)");
+        System.out.print("입력: ");
+        String condition = sc.nextLine();
+        System.out.print("검색어 입력: ");
+        String value = sc.nextLine();
+        return new SearchCriteria(condition,value);
+
     }
 
 
