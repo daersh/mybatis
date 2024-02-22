@@ -15,6 +15,7 @@ public class MenuService {
     }
 
     public List<MenuDTO> findAllMenus() {
+
         SqlSession sqlSession = getSqlSession();
 
         List<MenuDTO> menuList = menuDAO.selectAllMenus(sqlSession);
