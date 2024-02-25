@@ -84,7 +84,7 @@
 <!--        <id property="categoryCode" column="CATEGORY_CODE"/>-->
 <!--        <result property="categoryName" column="CATEGORY_NAME"/>-->
 <!--        <result property="refCategoryCode" column="REF_CATEGORY_CODE"/>-->
-<!--        <collection property="menus" resultMap="용"/>-->
+<!--        <collection property="menus" resultMap="menuResultMap"/>-->
 <!--    </resultMap>-->
 <!--    <resultMap id="menuResultMap" type="com.ohgiraffers.section01.xmlmapper.MenuDTO">-->
 <!--        <id property="menuCode" column="MENU_CODE"/>-->
